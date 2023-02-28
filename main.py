@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 bot = Bot(os.getenv('TOKEN'))
 dp = Dispatcher(bot)
 
@@ -44,8 +43,12 @@ def generate_parade_colored():
 
 @dp.message_handler(commands=['start'])
 async def animation_handler(message: Message):
-    upload_message = await bot.send_message(chat_id=message.chat.id, text="Начинаем загрузку...")
-    for i in range(600):
+    await message.answer("""Поздравляю с 8 Марта\nИ желаю я тепла,\nМного радости, подарков,\nЛюбви, счастья и добра!""")
+    upload_message = await bot.send_message(chat_id=message.chat.id, text="ОЖИДАЙТЕ!!!")
+    await asyncio.sleep(1)
+    with open("animation.gif", "rb") as f:
+        await message.answer_video(f)
+    for i in range(50):
         text = generate_parade_colored()
         await upload_message.edit_text(text)
         await asyncio.sleep(EDIT_DELAY)
